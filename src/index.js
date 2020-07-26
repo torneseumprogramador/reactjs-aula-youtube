@@ -1,13 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import App from './views/App';
 import * as serviceWorker from './serviceWorker';
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import Clientes from './views/Clientes';
+import Pagina404 from './views/Pagina404';
+import ClienteMostrar from './views/ClienteMostrar';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <BrowserRouter>
+    <Switch>
+        <Route path="/" exact={true} component={App} />
+        <Route path="/clientes" component={Clientes} />
+        <Route path="/cliente/:id" component={ClienteMostrar} />
+        <Route path='*' component={Pagina404} />
+    </Switch>
+  </ BrowserRouter>,
   document.getElementById('root')
 );
 
