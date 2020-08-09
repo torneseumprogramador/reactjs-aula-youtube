@@ -13,6 +13,7 @@ ReactDOM.render(
     <Switch>
         <Route path="/" exact={true} component={App} />
         <Route path="/clientes" component={Clientes} />
+        <Route path="/cliente/novo" component={ClienteMostrar} />
         <Route path="/cliente/:id" component={ClienteMostrar} />
         <Route path='*' component={Pagina404} />
     </Switch>

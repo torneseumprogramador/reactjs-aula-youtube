@@ -2,8 +2,20 @@ import React, {Component} from 'react';
 import Header from './shared/Header';
 import Footer from './shared/Footer';
 import { Link } from 'react-router-dom'
+import axios from 'axios';
 
 class Clientes extends Component {
+  state = {
+    clientes: []
+  }
+
+  componentDidMount(){
+    axios.get('https://localhost:5001/clientes').then(response => {
+      const clientes = response.data
+      this.setState({ clientes });
+    })
+  }
+
   render() {
     return  (
       <div>
@@ -14,16 +26,31 @@ class Clientes extends Component {
               <div className="col-6 mx-auto col-md-4 order-md-2">
               </div>
               <div className="col-md-8 order-md-1 text-center text-md-left pr-md-5">
-                <h1 className="mb-3">Lista de clientes</h1>
-                <ul>
-                  <li>
-                    <Link to="/cliente/1">Cliente 1</Link>
-                  </li>
-                  <li>
-                    <Link to="/cliente/2">Cliente 2</Link>
-                  </li>
-                </ul>
-                <p className="text-muted mb-0">
+                <h1 className="mb-3">Lista de clientes - {this.state.clientes.length} </h1>
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>Telefone</th>
+                      <th>Endereço</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {
+                    this.state.clientes.map((cliente, index) => (
+                      <tr key={index}>
+                        <td>{cliente.nome}</td>
+                        <td>{cliente.telefone}</td>
+                        <td>{cliente.endereco}</td>
+                        <td><Link to={`/cliente/${cliente.id}`}>Editar</Link></td>
+                      </tr>
+                    ))
+                  }
+                  </tbody>
+                </table>
+                <Link className="btn btn-primary" to={`/cliente/novo`}>Novo</Link>
+                <p style={{marginTop: "30px"}} className="text-muted mb-0">
                   Versão v0.0.1
                 </p>
               </div>
