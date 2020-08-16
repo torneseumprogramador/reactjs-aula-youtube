@@ -10,10 +10,22 @@ class Clientes extends Component {
   }
 
   componentDidMount(){
+    this.lista()
+  }
+
+  lista = () => {
     axios.get('https://localhost:5001/clientes').then(response => {
       const clientes = response.data
       this.setState({ clientes });
     })
+  }
+
+  excluir = (cliente) => {
+    if(window.confirm("Deseja realmente excluir?")){
+      axios.delete(`https://localhost:5001/clientes/${cliente.id}`).then(response => {
+        this.lista()
+      })
+    }
   }
 
   render() {
@@ -43,7 +55,10 @@ class Clientes extends Component {
                         <td>{cliente.nome}</td>
                         <td>{cliente.telefone}</td>
                         <td>{cliente.endereco}</td>
-                        <td><Link to={`/cliente/${cliente.id}`}>Editar</Link></td>
+                        <td><Link to={`/cliente/${cliente.id}`} className="btn btn-primary">Editar</Link></td>
+                        <td>
+                          <button className="btn btn-danger" onClick={() => { this.excluir(cliente) }} >Excluir</button>
+                        </td>
                       </tr>
                     ))
                   }

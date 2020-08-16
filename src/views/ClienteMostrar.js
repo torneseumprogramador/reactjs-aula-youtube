@@ -34,7 +34,6 @@ class ClienteMostrar extends Component {
   }
 
   salvar2 = () => {
-    debugger
     if(this.state.cliente.id > 0){
       axios.put(`https://localhost:5001/clientes/${this.state.cliente.id}`, this.state.cliente).then(response => {
         //window.location.href = "/clientes"
